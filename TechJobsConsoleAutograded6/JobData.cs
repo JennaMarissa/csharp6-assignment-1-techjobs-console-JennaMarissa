@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Text;
 
 namespace TechJobsConsoleAutograded6
@@ -47,7 +48,28 @@ namespace TechJobsConsoleAutograded6
             // load data, if not already loaded
             LoadData();
 
-            return null;
+            List<Dictionary<string, string>> listings = new List<Dictionary<string, string>>();
+
+            //List<string> values = new List<string>();
+
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                foreach (var kvp in job)
+                {
+                    string aValue = kvp.Value;
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
+                    {
+                        if (!listings.Contains(job))
+                        {
+                            listings.Add(job);
+                        }
+                    }
+                }
+                
+            }
+
+            return listings;
         }
 
         /**
@@ -70,7 +92,7 @@ namespace TechJobsConsoleAutograded6
 
 
                 //TODO: Make search case-insensitive
-                if (aValue.Contains(value))
+                if (aValue.ToUpper().Contains(value.ToUpper()))
                 {
                     jobs.Add(row);
                 }
